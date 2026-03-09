@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { isAssignmentCompleted, getProgressStats } from '../utils/progressTracker';
+import { isAssignmentCompleted } from '../utils/progressTracker';
 
 interface Assignment {
   id: string;

@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import ProfileDropdown from './ProfileDropdown';
-import { getProgressStats } from '../utils/progressTracker';
+import LoginModal from './LoginModal';
+import { useAuth } from '../contexts/AuthContext';
+import { useProgress } from '../contexts/ProgressContext';
 
 const Header: React.FC = () => {
-  const location = useLocation();
-  const [progressStats, setProgressStats] = useState({ completedCount: 0, totalCount: 0, completionRate: 0 });
+  const { user, logout } = useAuth();
+  const { getCompletionStats } = useProgress();
 
-  useEffect(() => {
-    // Update progress stats when component mounts or location changes
-    const stats = getProgressStats(10); // Assuming 10 total assignments
-    setProgressStats(stats);
-  }, [location]);
+  // Calculate progress stats
+  const progressStats = getCompletionStats(10); // Assuming 10 total assignments
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <header className="header">
@@ -36,7 +39,16 @@ const Header: React.FC = () => {
         </nav>
 
         <div className="header__user-menu">
-          <ProfileDropdown />
+          {user ? (
+            <div className="header__user-greeting">
+              <span className="header__greeting-text">
+                Hello, {user.name}!
+              </span>
+              <ProfileDropdown user={user} onLogout={handleLogout} />
+            </div>
+          ) : (
+            <LoginModal />
+          )}
         </div>
       </div>
     </header>

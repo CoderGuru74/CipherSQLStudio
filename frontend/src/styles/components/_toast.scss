@@ -1,4 +1,6 @@
 // Toast Notification Component Styles
+@import '../variables';
+@import '../mixins';
 .toast {
   position: fixed;
   top: $spacing-lg;
@@ -9,7 +11,7 @@
   background: rgba($color-bg-secondary, 0.95);
   backdrop-filter: blur(16px);
   border: 1px solid rgba($color-border, 0.2);
-  border-radius: $border-radius-lg;
+  border-radius: $radius-lg;
   box-shadow: $shadow-xl;
   z-index: $z-index-toast;
   display: flex;
@@ -86,7 +88,7 @@
   &__close {
     width: 24px;
     height: 24px;
-    border-radius: $border-radius-sm;
+    border-radius: $radius-sm;
     background: transparent;
     border: none;
     color: $color-text-tertiary;

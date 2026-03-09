@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import { useToast } from '../hooks/useToast';
-import { markAssignmentCompleted } from '../utils/progressTracker';
+import { useProgress } from '../contexts/ProgressContext';
+import { useLocation } from 'react-router-dom';
 
 interface SQLEditorProps {
   value: string;
@@ -22,6 +23,14 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
 }) => {
   const editorRef = useRef<any>(null);
   const { showSuccess, showError } = useToast();
+  const { markAssignmentCompleted } = useProgress();
+  const location = useLocation();
+
+  // Get assignment ID from URL
+  const getAssignmentId = () => {
+    const match = location.pathname.match(/\/assignment\/(.+)/);
+    return match ? match[1] : null;
+  };
 
   const handleEditorDidMount = (editor: any, monaco: any) => {
     editorRef.current = editor;
@@ -89,9 +98,13 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
       
       // Simulate success for demo (in real app, this would come from API response)
       setTimeout(() => {
-        showSuccess('Query executed successfully!');
-        // Mark assignment as completed if query returns data
-        markAssignmentCompleted('1'); // This would be dynamic based on current assignment
+        const assignmentId = getAssignmentId();
+        if (assignmentId) {
+          markAssignmentCompleted(assignmentId);
+          showSuccess('Correct! Progress Saved');
+        } else {
+          showSuccess('Query executed successfully!');
+        }
       }, 1000);
     }
   };

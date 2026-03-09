@@ -1,9 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { User } from '../contexts/AuthContext';
+
+interface ProfileDropdownProps {
+  user: User;
+  onLogout: () => void;
+}
 
 /**
  * Profile dropdown component with user menu options
  */
-const ProfileDropdown: React.FC = () => {
+const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ user, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -23,16 +29,14 @@ const ProfileDropdown: React.FC = () => {
 
   const handleProfileSettings = () => {
     setIsOpen(false);
-    alert('Profile Settings - Feature coming soon!');
+    // Navigate to profile settings or show modal
+    console.log(`Profile Settings for ${user.name} clicked`);
   };
 
   const handleLogout = () => {
     setIsOpen(false);
-    if (confirm('Are you sure you want to logout?')) {
-      // Clear progress data
-      localStorage.removeItem('ciphersql_progress');
-      alert('Logged out successfully! Progress data cleared.');
-      // In a real app, this would redirect to login page
+    if (confirm(`Are you sure you want to logout, ${user.name}?`)) {
+      onLogout();
     }
   };
 
@@ -45,9 +49,9 @@ const ProfileDropdown: React.FC = () => {
         aria-expanded={isOpen}
       >
         <div className="profile-dropdown__avatar">
-          <span className="profile-dropdown__initial">S</span>
+          <span className="profile-dropdown__initial">{user.name.charAt(0).toUpperCase()}</span>
         </div>
-        <span className="profile-dropdown__name">Shubham</span>
+        <span className="profile-dropdown__name">{user.name}</span>
         <svg
           className={`profile-dropdown__arrow ${isOpen ? 'profile-dropdown__arrow--open' : ''}`}
           width="12"
@@ -71,11 +75,11 @@ const ProfileDropdown: React.FC = () => {
           <div className="profile-dropdown__header">
             <div className="profile-dropdown__user-info">
               <div className="profile-dropdown__user-avatar">
-                <span className="profile-dropdown__user-initial">S</span>
+                <span className="profile-dropdown__user-initial">{user.name.charAt(0).toUpperCase()}</span>
               </div>
               <div className="profile-dropdown__user-details">
-                <div className="profile-dropdown__user-name">Shubham</div>
-                <div className="profile-dropdown__user-email">shubham@example.com</div>
+                <div className="profile-dropdown__user-name">{user.name}</div>
+                <div className="profile-dropdown__user-email">{user.email}</div>
               </div>
             </div>
           </div>

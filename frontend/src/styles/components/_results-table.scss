@@ -1,8 +1,10 @@
 // Results Table Component Styles
+@import '../variables';
+@import '../mixins';
 .results-table {
   &__container {
     @include glassmorphism-card(0.7, 12px);
-    border-radius: $border-radius-lg;
+    border-radius: $radius-lg;
     overflow: hidden;
     flex: 1;
     display: flex;
@@ -222,7 +224,7 @@
       font-size: $font-size-sm;
       background: rgba($color-error, 0.1);
       padding: $spacing-md;
-      border-radius: $border-radius-md;
+      border-radius: $radius-md;
       border-left: 4px solid $color-error;
       text-align: left;
       word-break: break-word;

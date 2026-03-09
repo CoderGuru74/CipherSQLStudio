@@ -1,11 +1,13 @@
 // Workspace Component Styles
+@import '../variables';
+@import '../mixins';
 .workspace {
   @include glassmorphism(0.8, 16px, 0.1);
   display: flex;
   flex-direction: column;
   height: calc(100vh - 80px); // Account for header height
   margin: $spacing-lg;
-  border-radius: $border-radius-lg;
+  border-radius: $radius-lg;
   overflow: hidden;
 
   @include respond-to('mobile') {
@@ -62,7 +64,7 @@
   &__section {
     @include glassmorphism-card(0.7, 12px);
     padding: $spacing-lg;
-    border-radius: $border-radius-md;
+    border-radius: $radius-md;
 
     @include respond-to('mobile') {
       padding: $spacing-md;
@@ -150,7 +152,7 @@
 // SQL Editor Panel
 .editor-panel {
   @include glassmorphism-card(0.7, 12px);
-  border-radius: $border-radius-lg;
+  border-radius: $radius-lg;
   overflow: hidden;
   flex: 1;
   display: flex;

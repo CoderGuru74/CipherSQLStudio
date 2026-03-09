@@ -1,4 +1,6 @@
 // Reset and Base Styles
+@use 'sass:math';
+
 *,
 *::before,
 *::after {
@@ -206,7 +208,9 @@ img {
 
 // Grid System
 .row {
-  @include row;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -#{math.div($grid-gutter, 2)};
 }
 
 @for $i from 1 through $grid-columns {

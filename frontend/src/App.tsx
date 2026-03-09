@@ -1,6 +1,7 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useToast } from './hooks/useToast';
+import { AuthProvider } from './contexts/AuthContext';
+import { ProgressProvider } from './contexts/ProgressContext';
 import Header from './components/Header';
 import AssignmentList from './components/AssignmentList';
 import Workspace from './components/Workspace';
@@ -12,31 +13,35 @@ function App() {
   const { toasts } = useToast();
 
   return (
-    <Router>
-      <div className="app">
-        <Header />
-        <main className="main">
-          <Routes>
-            <Route path="/" element={<AssignmentList />} />
-            <Route path="/assignment/:id" element={<Workspace />} />
-            <Route path="/progress" element={<Progress />} />
-          </Routes>
-        </main>
-        
-        {/* Toast Container */}
-        <div className="toast-container">
-          {toasts.map((toast) => (
-            <ToastNotification
-              key={toast.id}
-              message={toast.message}
-              type={toast.type}
-              duration={toast.duration}
-              onClose={() => {/* Handled by useToast hook */}}
-            />
-          ))}
-        </div>
-      </div>
-    </Router>
+    <AuthProvider>
+      <ProgressProvider>
+        <Router>
+          <div className="app">
+            <Header />
+            <main className="main">
+              <Routes>
+                <Route path="/" element={<AssignmentList />} />
+                <Route path="/assignment/:id" element={<Workspace />} />
+                <Route path="/progress" element={<Progress />} />
+              </Routes>
+            </main>
+            
+            {/* Toast Container */}
+            <div className="toast-container">
+              {toasts.map((toast) => (
+                <ToastNotification
+                  key={toast.id}
+                  message={toast.message}
+                  type={toast.type}
+                  duration={toast.duration}
+                  onClose={() => {/* Handled by useToast hook */}}
+                />
+              ))}
+            </div>
+          </div>
+        </Router>
+      </ProgressProvider>
+    </AuthProvider>
   );
 }
 
