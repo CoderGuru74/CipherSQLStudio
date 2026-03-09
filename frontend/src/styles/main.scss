@@ -1,0 +1,15 @@
+// Main SCSS file - Import all partials
+@import 'variables';
+@import 'mixins';
+@import 'base';
+
+// Component-specific styles will be imported here
+@import 'components/header';
+@import 'components/assignment-list';
+@import 'components/workspace';
+@import 'components/schema-viewer';
+@import 'components/results-table';
+@import 'components/hint-button';
+@import 'components/loading';
+@import 'components/error';
+@import 'components/monaco';

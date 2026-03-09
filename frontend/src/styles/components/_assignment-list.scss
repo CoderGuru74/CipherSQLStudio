@@ -1,0 +1,254 @@
+// Assignment List Component Styles
+.assignment-list {
+  padding: $spacing-lg 0;
+
+  &__container {
+    @include container;
+  }
+
+  &__header {
+    margin-bottom: $spacing-xl;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+  }
+
+  &__subtitle {
+    font-size: $font-size-lg;
+    color: $color-text-secondary;
+    margin-bottom: 0;
+  }
+
+  &__filters {
+    display: flex;
+    gap: $spacing-md;
+    margin-bottom: $spacing-xl;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__filter-button {
+    @include button-secondary;
+    padding: $spacing-xs $spacing-md;
+    font-size: $font-size-sm;
+    border-radius: $radius-lg;
+
+    &--active {
+      @include button-primary;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: $spacing-lg;
+    grid-template-columns: 1fr;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include desktop {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include large-desktop {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    padding: $spacing-3xl;
+    color: $color-text-secondary;
+
+    &-icon {
+      font-size: $font-size-4xl;
+      margin-bottom: $spacing-md;
+      opacity: 0.5;
+    }
+
+    &-title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $spacing-sm;
+      color: $color-text-primary;
+    }
+
+    &-description {
+      font-size: $font-size-base;
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Assignment Card Component
+.assignment-card {
+  @include card;
+  @include card-hover;
+  padding: $spacing-lg;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $color-primary, $color-primary-dark);
+    opacity: 0;
+    transition: opacity $transition-fast;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
+  &__header {
+    @include flex-between;
+    margin-bottom: $spacing-md;
+    align-items: flex-start;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: 0;
+    line-height: $line-height-tight;
+    @include text-clamp(2);
+  }
+
+  &__difficulty {
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-lg;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+
+    &--easy {
+      background-color: rgba($difficulty-easy, 0.2);
+      color: $difficulty-easy;
+    }
+
+    &--medium {
+      background-color: rgba($difficulty-medium, 0.2);
+      color: $difficulty-medium;
+    }
+
+    &--hard {
+      background-color: rgba($difficulty-hard, 0.2);
+      color: $difficulty-hard;
+    }
+  }
+
+  &__description {
+    color: $color-text-secondary;
+    font-size: $font-size-sm;
+    line-height: $line-height-normal;
+    margin-bottom: $spacing-md;
+    @include text-clamp(3);
+  }
+
+  &__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+
+  &__stats {
+    display: flex;
+    gap: $spacing-md;
+  }
+
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__stat-icon {
+    opacity: 0.7;
+  }
+
+  &__progress {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__progress-bar {
+    width: 40px;
+    height: 4px;
+    background-color: $color-bg-tertiary;
+    border-radius: $radius-sm;
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background-color: $color-primary;
+    transition: width $transition-normal;
+  }
+
+  &__completed {
+    color: $color-success;
+    font-weight: $font-weight-medium;
+  }
+
+  &__locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+      box-shadow: $shadow-md;
+    }
+  }
+
+  &__locked-icon {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    color: $color-text-tertiary;
+    opacity: 0.7;
+  }
+
+  // Mobile Responsive
+  @include mobile {
+    padding: $spacing-md;
+
+    &__header {
+      gap: $spacing-sm;
+    }
+
+    &__title {
+      font-size: $font-size-base;
+    }
+
+    &__description {
+      font-size: $font-size-xs;
+    }
+
+    &__meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-xs;
+    }
+
+    &__stats {
+      gap: $spacing-sm;
+    }
+  }
+}

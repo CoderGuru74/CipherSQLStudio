@@ -1,0 +1,411 @@
+// Error Component Styles
+.error {
+  padding: $spacing-lg;
+  background-color: rgba($color-error, 0.1);
+  border: 1px solid rgba($color-error, 0.2);
+  border-radius: $radius-lg;
+  color: $color-error;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: $color-error;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+  }
+
+  &__icon {
+    font-size: $font-size-xl;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-xs;
+    color: $color-error;
+  }
+
+  &__message {
+    font-size: $font-size-sm;
+    line-height: $line-height-normal;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__details {
+    background-color: $color-bg-tertiary;
+    border: 1px solid rgba($color-error, 0.3);
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    margin-top: $spacing-sm;
+  }
+
+  &__details-title {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: $spacing-sm;
+    color: $color-error;
+  }
+
+  &__details-content {
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    line-height: $line-height-normal;
+    color: $color-text-secondary;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 200px;
+    overflow-y: auto;
+    @include scrollbar-dark;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  &__button {
+    @include button-secondary;
+    padding: $spacing-xs $spacing-md;
+    font-size: $font-size-xs;
+    border-color: rgba($color-error, 0.3);
+    color: $color-error;
+
+    &:hover {
+      background-color: rgba($color-error, 0.1);
+      border-color: rgba($color-error, 0.5);
+    }
+  }
+
+  &__button--primary {
+    @include button-primary;
+    background-color: $color-error;
+
+    &:hover {
+      background-color: darken($color-error, 10%);
+    }
+  }
+
+  &__close-button {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    background: none;
+    border: none;
+    color: $color-error;
+    cursor: pointer;
+    padding: $spacing-xs;
+    border-radius: $radius-sm;
+    transition: all $transition-fast;
+    font-size: $font-size-lg;
+
+    &:hover {
+      background-color: rgba($color-error, 0.1);
+    }
+  }
+
+  // Error Variants
+  &--warning {
+    background-color: rgba($color-warning, 0.1);
+    border-color: rgba($color-warning, 0.2);
+    color: $color-warning;
+
+    &::before {
+      background-color: $color-warning;
+    }
+
+    .error__title {
+      color: $color-warning;
+    }
+
+    .error__details {
+      border-color: rgba($color-warning, 0.3);
+    }
+
+    .error__details-title {
+      color: $color-warning;
+    }
+
+    .error__button {
+      border-color: rgba($color-warning, 0.3);
+      color: $color-warning;
+
+      &:hover {
+        background-color: rgba($color-warning, 0.1);
+        border-color: rgba($color-warning, 0.5);
+      }
+    }
+
+    .error__close-button {
+      color: $color-warning;
+
+      &:hover {
+        background-color: rgba($color-warning, 0.1);
+      }
+    }
+  }
+
+  &--info {
+    background-color: rgba($color-info, 0.1);
+    border-color: rgba($color-info, 0.2);
+    color: $color-info;
+
+    &::before {
+      background-color: $color-info;
+    }
+
+    .error__title {
+      color: $color-info;
+    }
+
+    .error__details {
+      border-color: rgba($color-info, 0.3);
+    }
+
+    .error__details-title {
+      color: $color-info;
+    }
+
+    .error__button {
+      border-color: rgba($color-info, 0.3);
+      color: $color-info;
+
+      &:hover {
+        background-color: rgba($color-info, 0.1);
+        border-color: rgba($color-info, 0.5);
+      }
+    }
+
+    .error__close-button {
+      color: $color-info;
+
+      &:hover {
+        background-color: rgba($color-info, 0.1);
+      }
+    }
+  }
+
+  // Error Sizes
+  &--small {
+    padding: $spacing-md;
+
+    .error__header {
+      margin-bottom: $spacing-sm;
+    }
+
+    .error__icon {
+      font-size: $font-size-base;
+    }
+
+    .error__title {
+      font-size: $font-size-base;
+    }
+
+    .error__message {
+      font-size: $font-size-xs;
+    }
+  }
+
+  &--large {
+    padding: $spacing-xl;
+
+    .error__icon {
+      font-size: $font-size-2xl;
+    }
+
+    .error__title {
+      font-size: $font-size-xl;
+    }
+
+    .error__message {
+      font-size: $font-size-base;
+    }
+  }
+}
+
+// Inline Error (for form fields)
+.error-inline {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  color: $color-error;
+  font-size: $font-size-xs;
+  margin-top: $spacing-xs;
+
+  &__icon {
+    font-size: $font-size-xs;
+  }
+
+  &__text {
+    line-height: $line-height-normal;
+  }
+}
+
+// Error Boundary Styles
+.error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: $spacing-xl;
+  text-align: center;
+
+  &__icon {
+    font-size: $font-size-4xl;
+    color: $color-error;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+  }
+
+  &__description {
+    font-size: $font-size-base;
+    color: $color-text-secondary;
+    margin-bottom: $spacing-lg;
+    max-width: 600px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+// Toast Error Styles
+.toast-error {
+  position: fixed;
+  top: $spacing-lg;
+  right: $spacing-lg;
+  max-width: 400px;
+  z-index: $z-modal;
+  @include slide-up;
+
+  &--bottom-right {
+    top: auto;
+    bottom: $spacing-lg;
+  }
+
+  &--top-left {
+    right: auto;
+    left: $spacing-lg;
+  }
+
+  &--bottom-left {
+    top: auto;
+    bottom: $spacing-lg;
+    right: auto;
+    left: $spacing-lg;
+  }
+}
+
+// Mobile Responsive
+@include mobile {
+  .error {
+    padding: $spacing-md;
+
+    &__header {
+      gap: $spacing-sm;
+      margin-bottom: $spacing-sm;
+    }
+
+    &__icon {
+      font-size: $font-size-base;
+    }
+
+    &__title {
+      font-size: $font-size-base;
+    }
+
+    &__message {
+      font-size: $font-size-xs;
+    }
+
+    &__actions {
+      flex-direction: column;
+    }
+
+    &__button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__close-button {
+      top: $spacing-sm;
+      right: $spacing-sm;
+    }
+  }
+
+  .error-boundary {
+    min-height: 300px;
+    padding: $spacing-lg;
+
+    &__icon {
+      font-size: $font-size-3xl;
+    }
+
+    &__title {
+      font-size: $font-size-xl;
+    }
+
+    &__description {
+      font-size: $font-size-sm;
+    }
+
+    &__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  .toast-error {
+    top: $spacing-md;
+    right: $spacing-md;
+    left: $spacing-md;
+    max-width: none;
+
+    &--bottom-right {
+      bottom: $spacing-md;
+    }
+
+    &--top-left {
+      left: $spacing-md;
+    }
+
+    &--bottom-left {
+      bottom: $spacing-md;
+      left: $spacing-md;
+    }
+  }
+
+  .error-inline {
+    font-size: 10px;
+  }
+}

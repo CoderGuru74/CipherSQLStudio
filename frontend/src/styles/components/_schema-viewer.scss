@@ -1,0 +1,225 @@
+// Schema Viewer Component Styles
+.schema-viewer {
+  &__content {
+    max-height: 400px;
+    overflow-y: auto;
+    @include scrollbar-dark;
+  }
+
+  &__tables {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__table {
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    overflow: hidden;
+  }
+
+  &__table-header {
+    background-color: $color-bg-tertiary;
+    padding: $spacing-md;
+    border-bottom: 1px solid $color-border;
+    @include flex-between;
+    align-items: center;
+  }
+
+  &__table-name {
+    font-family: $font-family-mono;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    font-size: $font-size-sm;
+    margin-bottom: 0;
+  }
+
+  &__table-info {
+    display: flex;
+    gap: $spacing-md;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+
+  &__table-stat {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__table-content {
+    padding: $spacing-md;
+  }
+
+  &__columns {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__column-header {
+    background-color: $color-bg-secondary;
+    padding: $spacing-xs $spacing-sm;
+    text-align: left;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-xs;
+    color: $color-text-primary;
+    border-bottom: 1px solid $color-border;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__column {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    border-bottom: 1px solid rgba($color-border, 0.5);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__column-name {
+    font-family: $font-family-mono;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+  }
+
+  &__column-type {
+    color: $color-text-tertiary;
+    font-style: italic;
+  }
+
+  &__column-constraints {
+    display: flex;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+  }
+
+  &__constraint {
+    padding: 1px $spacing-xs;
+    border-radius: $radius-sm;
+    font-size: 10px;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &--primary-key {
+      background-color: rgba($color-primary, 0.2);
+      color: $color-primary;
+    }
+
+    &--foreign-key {
+      background-color: rgba($color-info, 0.2);
+      color: $color-info;
+    }
+
+    &--unique {
+      background-color: rgba($color-warning, 0.2);
+      color: $color-warning;
+    }
+
+    &--not-null {
+      background-color: rgba($color-text-tertiary, 0.2);
+      color: $color-text-tertiary;
+    }
+  }
+
+  &__sample-data {
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
+    border-top: 1px solid $color-border;
+  }
+
+  &__sample-title {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__sample-table {
+    width: 100%;
+    font-size: $font-size-xs;
+    border-collapse: collapse;
+  }
+
+  &__sample-th {
+    background-color: $color-bg-tertiary;
+    padding: $spacing-xs $spacing-sm;
+    text-align: left;
+    font-weight: $font-weight-medium;
+    color: $color-text-secondary;
+    border-bottom: 1px solid $color-border;
+    font-family: $font-family-mono;
+  }
+
+  &__sample-td {
+    padding: $spacing-xs $spacing-sm;
+    color: $color-text-secondary;
+    border-bottom: 1px solid rgba($color-border, 0.5);
+    font-family: $font-family-mono;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    padding: $spacing-xl;
+    color: $color-text-tertiary;
+    font-style: italic;
+  }
+
+  &__loading {
+    text-align: center;
+    padding: $spacing-xl;
+    color: $color-text-tertiary;
+  }
+
+  &__error {
+    padding: $spacing-md;
+    background-color: rgba($color-error, 0.1);
+    border: 1px solid rgba($color-error, 0.2);
+    border-radius: $radius-md;
+    color: $color-error;
+    font-size: $font-size-sm;
+  }
+}
+
+// Mobile Responsive
+@include mobile {
+  .schema-viewer {
+    &__content {
+      max-height: 300px;
+    }
+
+    &__table-header {
+      padding: $spacing-sm;
+    }
+
+    &__table-content {
+      padding: $spacing-sm;
+    }
+
+    &__column-header,
+    &__column {
+      padding: 2px $spacing-xs;
+      font-size: 10px;
+    }
+
+    &__constraint {
+      font-size: 8px;
+      padding: 1px 2px;
+    }
+
+    &__sample-th,
+    &__sample-td {
+      padding: 2px $spacing-xs;
+      font-size: 10px;
+    }
+  }
+}

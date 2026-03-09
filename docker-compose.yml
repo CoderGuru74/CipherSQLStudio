@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ciphersql-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ciphersql_studio
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_READONLY_USER: ciphersql_readonly
+      POSTGRES_READONLY_PASSWORD: readonly_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/src/database/setup.sql:/docker-entrypoint-initdb.d/01-setup.sql
+      - ./backend/src/database/create-readonly-user.sql:/docker-entrypoint-initdb.d/02-readonly-user.sql
+    networks:
+      - ciphersql-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ciphersql_studio"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # MongoDB (for persisting assignments/user attempts)
+  mongodb:
+    image: mongo:6.0
+    container_name: ciphersql-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: ciphersql_studio
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: mongo_password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - ciphersql-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ciphersql-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ciphersql_studio
+      DB_READONLY_USER: ciphersql_readonly
+      DB_READONLY_PASSWORD: readonly_password
+      DB_SSL: "false"
+      MONGODB_URI: mongodb://admin:mongo_password@mongodb:27017/ciphersql_studio?authSource=admin
+      FRONTEND_URL: http://localhost:3000
+      LLM_PROVIDER: gemini
+      # Add your LLM API key here or use environment variable
+      # LLM_API_KEY: your_gemini_api_key_here
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    networks:
+      - ciphersql-network
+    volumes:
+      - ./backend/logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ciphersql-frontend
+    restart: unless-stopped
+    environment:
+      VITE_API_BASE_URL: http://localhost:5000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - ciphersql-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+  mongodb_data:
+    driver: local
+
+networks:
+  ciphersql-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

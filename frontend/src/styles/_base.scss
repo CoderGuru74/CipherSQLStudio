@@ -1,0 +1,471 @@
+// Reset and Base Styles
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-family-sans;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background-color: $color-bg-primary;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  margin-bottom: $spacing-md;
+  color: $color-text-primary;
+}
+
+h1 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+}
+
+h2 {
+  font-size: $font-size-3xl;
+}
+
+h3 {
+  font-size: $font-size-2xl;
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+}
+
+p {
+  margin-bottom: $spacing-md;
+  color: $color-text-secondary;
+  line-height: $line-height-relaxed;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: $color-primary-light;
+  }
+  
+  &:focus {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Lists
+ul, ol {
+  margin-bottom: $spacing-md;
+  padding-left: $spacing-lg;
+}
+
+li {
+  margin-bottom: $spacing-sm;
+  color: $color-text-secondary;
+}
+
+// Code
+code {
+  font-family: $font-family-mono;
+  font-size: 0.875em;
+  background-color: $color-bg-tertiary;
+  padding: 0.125rem 0.25rem;
+  border-radius: $radius-sm;
+  color: $color-primary-light;
+}
+
+pre {
+  font-family: $font-family-mono;
+  background-color: $color-bg-tertiary;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+  overflow-x: auto;
+  margin-bottom: $spacing-md;
+  @include scrollbar-dark;
+  
+  code {
+    background: none;
+    padding: 0;
+    color: $color-text-primary;
+  }
+}
+
+// Blockquote
+blockquote {
+  border-left: 4px solid $color-primary;
+  padding-left: $spacing-md;
+  margin: $spacing-lg 0;
+  color: $color-text-secondary;
+  font-style: italic;
+}
+
+// Tables
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $spacing-md;
+}
+
+th, td {
+  padding: $spacing-sm $spacing-md;
+  text-align: left;
+  border-bottom: 1px solid $color-border;
+}
+
+th {
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  background-color: $color-bg-secondary;
+}
+
+td {
+  color: $color-text-secondary;
+}
+
+// Form Elements
+label {
+  display: block;
+  margin-bottom: $spacing-xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
+input, textarea, select {
+  @include input-base;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+// Buttons
+button {
+  @include button-base;
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: $radius-md;
+}
+
+// Utility Classes
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.visually-hidden {
+  @extend .sr-only;
+}
+
+.focus-visible {
+  outline: 2px solid $color-primary;
+  outline-offset: 2px;
+}
+
+// Container
+.container {
+  @include container;
+}
+
+// Grid System
+.row {
+  @include row;
+}
+
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    @include col($i);
+  }
+}
+
+// Responsive Grid
+@include mobile {
+  @for $i from 1 through $grid-columns {
+    .col-sm-#{$i} {
+      @include col-sm($i);
+    }
+  }
+}
+
+@include tablet {
+  @for $i from 1 through $grid-columns {
+    .col-md-#{$i} {
+      @include col-md($i);
+    }
+  }
+}
+
+@include desktop {
+  @for $i from 1 through $grid-columns {
+    .col-lg-#{$i} {
+      @include col-lg($i);
+    }
+  }
+}
+
+@include large-desktop {
+  @for $i from 1 through $grid-columns {
+    .col-xl-#{$i} {
+      @include col-xl($i);
+    }
+  }
+}
+
+// Flexbox Utilities
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  @include flex-column;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.flex-start {
+  @include flex-start;
+}
+
+.flex-end {
+  @include flex-end;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+// Text Utilities
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-primary {
+  color: $color-text-primary;
+}
+
+.text-secondary {
+  color: $color-text-secondary;
+}
+
+.text-tertiary {
+  color: $color-text-tertiary;
+}
+
+.text-xs {
+  font-size: $font-size-xs;
+}
+
+.text-sm {
+  font-size: $font-size-sm;
+}
+
+.text-base {
+  font-size: $font-size-base;
+}
+
+.text-lg {
+  font-size: $font-size-lg;
+}
+
+.text-xl {
+  font-size: $font-size-xl;
+}
+
+.text-2xl {
+  font-size: $font-size-2xl;
+}
+
+.text-3xl {
+  font-size: $font-size-3xl;
+}
+
+.text-4xl {
+  font-size: $font-size-4xl;
+}
+
+.font-normal {
+  font-weight: $font-weight-normal;
+}
+
+.font-medium {
+  font-weight: $font-weight-medium;
+}
+
+.font-semibold {
+  font-weight: $font-weight-semibold;
+}
+
+.font-bold {
+  font-weight: $font-weight-bold;
+}
+
+// Spacing Utilities
+.m-0 { margin: 0; }
+.mt-0 { margin-top: 0; }
+.mr-0 { margin-right: 0; }
+.mb-0 { margin-bottom: 0; }
+.ml-0 { margin-left: 0; }
+
+.m-1 { margin: $spacing-xs; }
+.mt-1 { margin-top: $spacing-xs; }
+.mr-1 { margin-right: $spacing-xs; }
+.mb-1 { margin-bottom: $spacing-xs; }
+.ml-1 { margin-left: $spacing-xs; }
+
+.m-2 { margin: $spacing-sm; }
+.mt-2 { margin-top: $spacing-sm; }
+.mr-2 { margin-right: $spacing-sm; }
+.mb-2 { margin-bottom: $spacing-sm; }
+.ml-2 { margin-left: $spacing-sm; }
+
+.m-3 { margin: $spacing-md; }
+.mt-3 { margin-top: $spacing-md; }
+.mr-3 { margin-right: $spacing-md; }
+.mb-3 { margin-bottom: $spacing-md; }
+.ml-3 { margin-left: $spacing-md; }
+
+.m-4 { margin: $spacing-lg; }
+.mt-4 { margin-top: $spacing-lg; }
+.mr-4 { margin-right: $spacing-lg; }
+.mb-4 { margin-bottom: $spacing-lg; }
+.ml-4 { margin-left: $spacing-lg; }
+
+.p-0 { padding: 0; }
+.pt-0 { padding-top: 0; }
+.pr-0 { padding-right: 0; }
+.pb-0 { padding-bottom: 0; }
+.pl-0 { padding-left: 0; }
+
+.p-1 { padding: $spacing-xs; }
+.pt-1 { padding-top: $spacing-xs; }
+.pr-1 { padding-right: $spacing-xs; }
+.pb-1 { padding-bottom: $spacing-xs; }
+.pl-1 { padding-left: $spacing-xs; }
+
+.p-2 { padding: $spacing-sm; }
+.pt-2 { padding-top: $spacing-sm; }
+.pr-2 { padding-right: $spacing-sm; }
+.pb-2 { padding-bottom: $spacing-sm; }
+.pl-2 { padding-left: $spacing-sm; }
+
+.p-3 { padding: $spacing-md; }
+.pt-3 { padding-top: $spacing-md; }
+.pr-3 { padding-right: $spacing-md; }
+.pb-3 { padding-bottom: $spacing-md; }
+.pl-3 { padding-left: $spacing-md; }
+
+.p-4 { padding: $spacing-lg; }
+.pt-4 { padding-top: $spacing-lg; }
+.pr-4 { padding-right: $spacing-lg; }
+.pb-4 { padding-bottom: $spacing-lg; }
+.pl-4 { padding-left: $spacing-lg; }
+
+// Background Utilities
+.bg-primary { background-color: $color-bg-primary; }
+.bg-secondary { background-color: $color-bg-secondary; }
+.bg-tertiary { background-color: $color-bg-tertiary; }
+.bg-quaternary { background-color: $color-bg-quaternary; }
+
+// Border Utilities
+.border { border: 1px solid $color-border; }
+.border-top { border-top: 1px solid $color-border; }
+.border-right { border-right: 1px solid $color-border; }
+.border-bottom { border-bottom: 1px solid $color-border; }
+.border-left { border-left: 1px solid $color-border; }
+
+.rounded { border-radius: $radius-md; }
+.rounded-sm { border-radius: $radius-sm; }
+.rounded-lg { border-radius: $radius-lg; }
+.rounded-xl { border-radius: $radius-xl; }
+
+// Shadow Utilities
+.shadow-sm { box-shadow: $shadow-sm; }
+.shadow-md { box-shadow: $shadow-md; }
+.shadow-lg { box-shadow: $shadow-lg; }
+.shadow-xl { box-shadow: $shadow-xl; }
+
+// Overflow Utilities
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+.overflow-scroll { overflow: scroll; }
+
+// Position Utilities
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.sticky { position: sticky; }
+
+// Display Utilities
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+.hidden { display: none; }
+
+// Width Utilities
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+
+// Height Utilities
+.h-full { height: 100%; }
+.h-auto { height: auto; }
+.h-screen { height: 100vh; }
+
+// Cursor Utilities
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+.cursor-not-allowed { cursor: not-allowed; }

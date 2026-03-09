@@ -1,0 +1,324 @@
+// Results Table Component Styles
+.results-table {
+  &__container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+  }
+
+  &__header {
+    @include flex-between;
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: 0;
+  }
+
+  &__stats {
+    display: flex;
+    gap: $spacing-md;
+    align-items: center;
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__content {
+    flex: 1;
+    overflow: auto;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background-color: $color-bg-secondary;
+    @include scrollbar-dark;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $font-size-sm;
+  }
+
+  &__thead {
+    background-color: $color-bg-tertiary;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  &__th {
+    padding: $spacing-sm $spacing-md;
+    text-align: left;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    border-bottom: 2px solid $color-border;
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  &__tbody {
+    // No specific styles needed
+  }
+
+  &__tr {
+    &:hover {
+      background-color: $color-bg-tertiary;
+    }
+
+    &:nth-child(even) {
+      background-color: rgba($color-bg-tertiary, 0.3);
+    }
+
+    &:nth-child(even):hover {
+      background-color: $color-bg-tertiary;
+    }
+  }
+
+  &__td {
+    padding: $spacing-sm $spacing-md;
+    color: $color-text-secondary;
+    border-bottom: 1px solid rgba($color-border, 0.5);
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    line-height: $line-height-normal;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    // Handle different data types
+    &--number {
+      text-align: right;
+      color: $color-primary;
+    }
+
+    &--string {
+      color: $color-text-primary;
+    }
+
+    &--boolean {
+      text-align: center;
+      color: $color-warning;
+    }
+
+    &--null {
+      color: $color-text-tertiary;
+      font-style: italic;
+    }
+
+    &--date {
+      color: $color-info;
+    }
+
+    // Long text handling
+    &--truncate {
+      @include text-ellipsis;
+      max-width: 200px;
+    }
+
+    // JSON handling
+    &--json {
+      font-family: $font-family-mono;
+      font-size: 10px;
+      color: $color-text-tertiary;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-3xl;
+    color: $color-text-tertiary;
+    text-align: center;
+  }
+
+  &__empty-icon {
+    font-size: $font-size-4xl;
+    margin-bottom: $spacing-md;
+    opacity: 0.5;
+  }
+
+  &__empty-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__empty-description {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    margin-bottom: 0;
+    max-width: 400px;
+  }
+
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-3xl;
+    color: $color-text-tertiary;
+  }
+
+  &__loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid $color-bg-quaternary;
+    border-top: 3px solid $color-primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: $spacing-md;
+  }
+
+  &__error {
+    padding: $spacing-lg;
+    background-color: rgba($color-error, 0.1);
+    border: 1px solid rgba($color-error, 0.2);
+    border-radius: $radius-md;
+    color: $color-error;
+    margin: $spacing-md;
+  }
+
+  &__error-title {
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-sm;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__error-message {
+    font-family: $font-family-mono;
+    font-size: $font-size-xs;
+    background-color: $color-bg-tertiary;
+    padding: $spacing-sm;
+    border-radius: $radius-sm;
+    margin-bottom: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
+    border-top: 1px solid $color-border;
+  }
+
+  &__action-button {
+    @include button-ghost;
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-xs;
+    gap: $spacing-xs;
+  }
+
+  &__export-button {
+    @include button-secondary;
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-xs;
+    gap: $spacing-xs;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Pagination (if needed for large result sets)
+.results-table__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1px solid $color-border;
+}
+
+.results-table__page-button {
+  @include button-ghost;
+  padding: $spacing-xs $spacing-sm;
+  font-size: $font-size-xs;
+  min-width: 32px;
+
+  &--active {
+    @include button-primary;
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.results-table__page-info {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin: 0 $spacing-md;
+}
+
+// Mobile Responsive
+@include mobile {
+  .results-table {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+    }
+
+    &__stats {
+      gap: $spacing-sm;
+    }
+
+    &__th,
+    &__td {
+      padding: $spacing-xs $spacing-sm;
+      font-size: 10px;
+    }
+
+    &__empty {
+      padding: $spacing-xl;
+    }
+
+    &__empty-icon {
+      font-size: $font-size-2xl;
+    }
+
+    &__empty-title {
+      font-size: $font-size-base;
+    }
+
+    &__empty-description {
+      font-size: $font-size-xs;
+    }
+
+    &__actions {
+      flex-direction: column;
+    }
+
+    &__action-button,
+    &__export-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

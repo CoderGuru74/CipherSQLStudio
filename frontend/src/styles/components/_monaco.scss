@@ -1,0 +1,126 @@
+// Monaco Editor Custom Styles
+.monaco-editor {
+  .margin {
+    background-color: $color-bg-secondary !important;
+  }
+  
+  .monaco-editor-background {
+    background-color: $color-bg-secondary !important;
+  }
+  
+  .monaco-editor {
+    color: $color-text-primary !important;
+    background-color: $color-bg-secondary !important;
+  }
+  
+  .line-numbers {
+    color: $color-text-tertiary !important;
+    background-color: $color-bg-tertiary !important;
+  }
+  
+  .current-line {
+    border: 1px solid $color-primary !important;
+    background-color: rgba($color-primary, 0.1) !important;
+  }
+  
+  .current-line-margin {
+    background-color: rgba($color-primary, 0.1) !important;
+  }
+  
+  .cursor {
+    background-color: $color-primary !important;
+    border-left: 1px solid $color-primary !important;
+  }
+  
+  .selection {
+    background-color: rgba($color-primary, 0.3) !important;
+  }
+  
+  .keyword {
+    color: $color-primary-light !important;
+    font-weight: $font-weight-semibold !important;
+  }
+  
+  .identifier {
+    color: $color-text-primary !important;
+  }
+  
+  .string {
+    color: $color-success !important;
+  }
+  
+  .number {
+    color: $color-warning !important;
+  }
+  
+  .comment {
+    color: $color-text-tertiary !important;
+    font-style: italic !important;
+  }
+  
+  .type {
+    color: $color-info !important;
+  }
+  
+  .function {
+    color: $color-primary !important;
+  }
+  
+  .delimiter {
+    color: $color-text-secondary !important;
+  }
+  
+  .minimap {
+    background-color: $color-bg-tertiary !important;
+  }
+  
+  .minimap-slider {
+    background-color: $color-bg-quaternary !important;
+  }
+  
+  .minimap-slider-background {
+    background-color: $color-bg-quaternary !important;
+  }
+  
+  .scrollbar {
+    background-color: $color-bg-tertiary !important;
+  }
+  
+  .scrollbar-slider {
+    background-color: $color-bg-quaternary !important;
+  }
+  
+  .scrollbar-slider:hover {
+    background-color: $color-text-tertiary !important;
+  }
+  
+  // Suggestions widget
+  .suggest-widget {
+    background-color: $color-bg-secondary !important;
+    border: 1px solid $color-border !important;
+    box-shadow: $shadow-lg !important;
+  }
+  
+  .suggest-row {
+    color: $color-text-primary !important;
+    background-color: transparent !important;
+    
+    &:hover {
+      background-color: $color-bg-tertiary !important;
+    }
+    
+    &.focused {
+      background-color: rgba($color-primary, 0.2) !important;
+      color: $color-primary !important;
+    }
+  }
+  
+  .monaco-suggest-label {
+    color: $color-text-secondary !important;
+  }
+  
+  // Hover widget
+  .hoverHighlight {
+    background-color: rgba($color-primary, 0.2) !important;
+  }
+}
