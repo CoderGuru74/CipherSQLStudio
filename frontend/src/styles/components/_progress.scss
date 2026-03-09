@@ -1,0 +1,211 @@
+// Progress Component Styles
+.progress {
+  @include glassmorphism(0.8, 16px, 0.1);
+  padding: $spacing-xl;
+  margin: $spacing-lg;
+  border-radius: $border-radius-lg;
+  min-height: calc(100vh - 80px);
+
+  @include respond-to('mobile') {
+    margin: $spacing-sm;
+    padding: $spacing-lg;
+    min-height: calc(100vh - 70px);
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-3xl;
+  }
+
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__subtitle {
+    font-size: $font-size-lg;
+    color: $color-text-secondary;
+    margin: 0;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-3xl;
+
+    @include respond-to('mobile') {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-md;
+    }
+  }
+
+  &__stat-card {
+    @include glassmorphism-card(0.7, 12px);
+    padding: $spacing-xl;
+    text-align: center;
+    border-radius: $border-radius-lg;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        0 0 30px rgba($color-primary, 0.1);
+    }
+  }
+
+  &__stat-number {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    margin-bottom: $spacing-sm;
+    line-height: 1;
+
+    @include respond-to('mobile') {
+      font-size: $font-size-3xl;
+    }
+  }
+
+  &__stat-label {
+    font-size: $font-size-base;
+    color: $color-text-secondary;
+    font-weight: $font-weight-medium;
+  }
+
+  &__overview {
+    @include glassmorphism-card(0.6, 12px);
+    padding: $spacing-xl;
+    border-radius: $border-radius-lg;
+
+    @include respond-to('mobile') {
+      padding: $spacing-lg;
+    }
+  }
+
+  &__section-title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__progress-bar {
+    width: 100%;
+    height: 32px;
+    background: rgba($color-border, 0.2);
+    border-radius: $border-radius-full;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: $spacing-2xl;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, $color-primary, $color-primary-light);
+    border-radius: $border-radius-full;
+    transition: width 0.5s ease;
+    position: relative;
+    min-width: 60px; // Ensure text is always visible
+  }
+
+  &__progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-sm;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  &__achievements {
+    margin-top: $spacing-xl;
+  }
+
+  &__achievements-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__achievement {
+    @include glassmorphism-card(0.5, 8px);
+    padding: $spacing-lg;
+    border-radius: $border-radius-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateX(4px);
+      border-color: rgba($color-primary, 0.3);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__achievement-icon {
+    font-size: $font-size-2xl;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba($color-primary, 0.1);
+    border-radius: $border-radius-lg;
+    flex-shrink: 0;
+  }
+
+  &__achievement-content {
+    flex: 1;
+  }
+
+  &__achievement-title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__achievement-description {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    line-height: 1.4;
+  }
+
+  // Empty state
+  &__empty {
+    text-align: center;
+    padding: $spacing-3xl;
+    color: $color-text-tertiary;
+
+    &-icon {
+      font-size: $font-size-4xl;
+      margin-bottom: $spacing-md;
+      opacity: 0.5;
+    }
+
+    &-title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $spacing-sm;
+      color: $color-text-secondary;
+    }
+
+    &-description {
+      font-size: $font-size-base;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+  }
+}

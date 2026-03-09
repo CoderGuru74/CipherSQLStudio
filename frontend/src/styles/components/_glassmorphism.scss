@@ -1,0 +1,171 @@
+// Glassmorphism Theme Mixins and Classes
+
+// Base glassmorphism mixin
+@mixin glassmorphism($opacity: 0.8, $blur: 16px, $border-opacity: 0.1) {
+  background: rgba($color-bg-secondary, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, $border-opacity);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+// Glassmorphism variants
+@mixin glassmorphism-light($opacity: 0.6, $blur: 12px) {
+  @include glassmorphism($opacity, $blur, 0.05);
+}
+
+@mixin glassmorphism-dark($opacity: 0.9, $blur: 20px) {
+  @include glassmorphism($opacity, $blur, 0.15);
+}
+
+@mixin glassmorphism-card($opacity: 0.7, $blur: 16px) {
+  @include glassmorphism($opacity, $blur, 0.1);
+  border-radius: $border-radius-lg;
+}
+
+// Glassmorphism utility classes
+.glass {
+  @include glassmorphism();
+}
+
+.glass--light {
+  @include glassmorphism-light();
+}
+
+.glass--dark {
+  @include glassmorphism-dark();
+}
+
+.glass--card {
+  @include glassmorphism-card();
+}
+
+// Glassmorphism hover effect
+@mixin glassmorphism-hover($scale: 1.02, $shadow-opacity: 0.2) {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale($scale);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, $shadow-opacity),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba($color-primary, 0.3);
+  }
+}
+
+// Glassmorphism active state
+@mixin glassmorphism-active($shadow-color: $color-primary) {
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 
+      0 4px 20px rgba($shadow-color, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+}
+
+// Glassmorphism glow effect
+@mixin glassmorphism-glow($glow-color: $color-primary, $glow-size: 20px) {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, $glow-color, transparent);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    filter: blur($glow-size);
+  }
+  
+  &:hover::before {
+    opacity: 0.3;
+  }
+}
+
+// Glassmorphism with gradient background
+@mixin glassmorphism-gradient($gradient-angle: 135deg, $color-1: $color-primary, $color-2: $color-primary-light) {
+  background: linear-gradient($gradient-angle, 
+    rgba($color-1, 0.1),
+    rgba($color-2, 0.1)
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+// Glassmorphism text overlay
+@mixin glassmorphism-text {
+  background: rgba($color-bg-secondary, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  color: $color-text-primary;
+}
+
+// Glassmorphism loading state
+@mixin glassmorphism-loading {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border-radius: inherit;
+    animation: glassmorphismPulse 1.5s ease-in-out infinite;
+  }
+}
+
+// Glassmorphism pulse animation
+@keyframes glassmorphismPulse {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Glassmorphism shimmer effect
+@mixin glassmorphism-shimmer {
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    animation: glassmorphismShimmer 2s ease-in-out infinite;
+  }
+}
+
+@keyframes glassmorphismShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}

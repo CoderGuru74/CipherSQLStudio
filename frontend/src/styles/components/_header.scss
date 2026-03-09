@@ -1,17 +1,22 @@
 // Header Component Styles
 .header {
-  background-color: $color-bg-secondary;
-  border-bottom: 1px solid $color-border;
-  padding: $spacing-md 0;
+  @include glassmorphism(0.8, 16px, 0.1);
   position: sticky;
   top: 0;
-  z-index: $z-sticky;
-  backdrop-filter: blur(10px);
-  background-color: rgba($color-bg-secondary, 0.95);
+  z-index: $z-index-header;
+  border-bottom: 1px solid rgba($color-border, 0.2);
 
   &__container {
     @include container;
     @include flex-between;
+    align-items: center;
+    padding: $spacing-md $spacing-lg;
+    height: 70px;
+
+    @include respond-to('mobile') {
+      padding: $spacing-sm $spacing-md;
+      height: 60px;
+    }
   }
 
   &__logo {
@@ -21,47 +26,78 @@
     text-decoration: none;
     color: $color-text-primary;
     font-weight: $font-weight-bold;
-    font-size: $font-size-xl;
-    
+    font-size: $font-size-lg;
+    transition: all 0.3s ease;
+
     &:hover {
       color: $color-primary;
+      transform: translateY(-1px);
     }
   }
 
   &__logo-icon {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, $color-primary, $color-primary-dark);
-    border-radius: $radius-md;
-    @include flex-center;
-    color: $color-bg-primary;
-    font-family: $font-family-mono;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, $color-primary, $color-primary-light);
+    border-radius: $border-radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text-inverse;
     font-weight: $font-weight-bold;
+    font-size: $font-size-sm;
+    box-shadow: 0 4px 12px rgba($color-primary, 0.3);
+
+    @include respond-to('mobile') {
+      width: 32px;
+      height: 32px;
+      font-size: $font-size-xs;
+    }
   }
 
   &__nav {
     display: flex;
-    align-items: center;
     gap: $spacing-lg;
+    align-items: center;
+
+    @include respond-to('mobile') {
+      gap: $spacing-md;
+    }
   }
 
   &__nav-link {
+    position: relative;
     color: $color-text-secondary;
     text-decoration: none;
     font-weight: $font-weight-medium;
     padding: $spacing-sm $spacing-md;
-    border-radius: $radius-md;
-    transition: all $transition-fast;
+    border-radius: $border-radius-md;
+    transition: all 0.3s ease;
 
     &:hover {
-      color: $color-text-primary;
-      background-color: $color-bg-tertiary;
+      color: $color-primary;
+      background: rgba($color-primary, 0.1);
     }
 
-    &--active {
+    &.active {
       color: $color-primary;
-      background-color: rgba($color-primary, 0.1);
+      background: rgba($color-primary, 0.15);
     }
+  }
+
+  &__nav-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: $color-success;
+    color: white;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    padding: 2px 6px;
+    border-radius: $border-radius-full;
+    min-width: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba($color-success, 0.3);
   }
 
   &__user-menu {

@@ -1,0 +1,180 @@
+// Profile Dropdown Component Styles
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background: rgba($color-primary, 0.1);
+    border: 1px solid rgba($color-primary, 0.2);
+    border-radius: $border-radius-lg;
+    color: $color-primary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+
+    &:hover {
+      background: rgba($color-primary, 0.2);
+      border-color: rgba($color-primary, 0.3);
+      transform: translateY(-1px);
+    }
+
+    &:focus {
+      outline: 2px solid rgba($color-primary, 0.5);
+      outline-offset: 2px;
+    }
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $color-primary, $color-primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-sm;
+    color: $color-text-inverse;
+    box-shadow: 0 2px 8px rgba($color-primary, 0.3);
+  }
+
+  &__name {
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+
+    @include respond-to('mobile') {
+      display: none;
+    }
+  }
+
+  &__arrow {
+    transition: transform 0.3s ease;
+    color: $color-text-secondary;
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + $spacing-sm);
+    right: 0;
+    min-width: 280px;
+    background: rgba($color-bg-secondary, 0.95);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba($color-border, 0.2);
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-xl;
+    z-index: $z-index-dropdown;
+    animation: dropdownSlideIn 0.3s ease;
+
+    @include respond-to('mobile') {
+      min-width: 240px;
+      right: -$spacing-md;
+    }
+  }
+
+  &__header {
+    padding: $spacing-md;
+    border-bottom: 1px solid rgba($color-border, 0.1);
+  }
+
+  &__user-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $color-primary, $color-primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-base;
+    color: $color-text-inverse;
+    box-shadow: 0 4px 12px rgba($color-primary, 0.3);
+  }
+
+  &__user-details {
+    flex: 1;
+  }
+
+  &__user-name {
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    font-size: $font-size-base;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__user-email {
+    color: $color-text-tertiary;
+    font-size: $font-size-sm;
+  }
+
+  &__divider {
+    height: 1px;
+    background: rgba($color-border, 0.1);
+    margin: 0 $spacing-md;
+  }
+
+  &__options {
+    padding: $spacing-sm;
+  }
+
+  &__option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: transparent;
+    border: none;
+    border-radius: $border-radius-md;
+    color: $color-text-primary;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: $font-size-sm;
+    text-align: left;
+
+    &:hover {
+      background: rgba($color-primary, 0.1);
+      color: $color-primary;
+    }
+
+    &--logout {
+      color: $color-error;
+
+      &:hover {
+        background: rgba($color-error, 0.1);
+        color: $color-error;
+      }
+    }
+  }
+
+  &__option-icon {
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+}
+
+// Dropdown animation
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

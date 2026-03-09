@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { isAssignmentCompleted, getProgressStats } from '../utils/progressTracker';
 
 interface Assignment {
   id: string;
@@ -18,6 +19,7 @@ const AssignmentList: React.FC = () => {
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [filter, setFilter] = useState<string>('all');
   const [loading, setLoading] = useState<boolean>(true);
+  const location = useLocation();
 
   useEffect(() => {
     // Mock data - in real app, this would come from API
@@ -29,8 +31,8 @@ const AssignmentList: React.FC = () => {
         difficulty: 'easy',
         category: 'Basics',
         estimatedTime: 15,
-        completed: true,
-        progress: 100,
+        completed: isAssignmentCompleted('1'),
+        progress: isAssignmentCompleted('1') ? 100 : 0,
         totalAttempts: 3,
         successRate: 100
       },
@@ -41,8 +43,8 @@ const AssignmentList: React.FC = () => {
         difficulty: 'medium',
         category: 'Joins',
         estimatedTime: 30,
-        completed: false,
-        progress: 60,
+        completed: isAssignmentCompleted('2'),
+        progress: isAssignmentCompleted('2') ? 100 : 60,
         totalAttempts: 5,
         successRate: 80
       },
@@ -53,8 +55,8 @@ const AssignmentList: React.FC = () => {
         difficulty: 'medium',
         category: 'Aggregation',
         estimatedTime: 25,
-        completed: false,
-        progress: 0,
+        completed: isAssignmentCompleted('3'),
+        progress: isAssignmentCompleted('3') ? 100 : 0,
         totalAttempts: 0,
         successRate: 0
       },
@@ -65,8 +67,8 @@ const AssignmentList: React.FC = () => {
         difficulty: 'hard',
         category: 'Advanced',
         estimatedTime: 45,
-        completed: false,
-        progress: 0,
+        completed: isAssignmentCompleted('4'),
+        progress: isAssignmentCompleted('4') ? 100 : 0,
         totalAttempts: 0,
         successRate: 0
       },
@@ -202,7 +204,9 @@ const AssignmentList: React.FC = () => {
                 key={assignment.id}
                 to={`/assignment/${assignment.id}`}
                 className={`assignment-card ${
-                  assignment.progress === 0 && !assignment.completed ? 'assignment-card__locked' : ''
+                  assignment.completed ? 'assignment-card--completed' : ''
+                } ${
+                  location.pathname === `/assignment/${assignment.id}` ? 'assignment-card--active' : ''
                 }`}
               >
                 <div className="assignment-card__header">
