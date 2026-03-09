@@ -6,12 +6,18 @@
   padding: $spacing-xl;
   margin: $spacing-lg;
   border-radius: $radius-lg;
+  // Enable proper scrolling
+  overflow: auto;
+  // Remove fixed height constraints
+  height: auto;
   min-height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
 
   @include respond-to('mobile') {
     margin: $spacing-sm;
     padding: $spacing-lg;
     min-height: calc(100vh - 70px);
+    max-height: calc(100vh - 70px);
   }
 
   &__header {

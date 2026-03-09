@@ -1,9 +1,12 @@
 // Schema Viewer Component Styles
 .schema-viewer {
   &__content {
-    max-height: 400px;
+    max-height: 350px;
     overflow-y: auto;
+    overflow-x: auto;
     @include scrollbar-dark;
+    // Ensure proper scrolling behavior
+    position: relative;
   }
 
   &__tables {

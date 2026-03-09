@@ -10,6 +10,9 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
+    // Ensure proper positioning and z-index
+    position: relative;
+    z-index: 1;
   }
 
   &__header {
@@ -55,6 +58,16 @@
     flex: 1;
     overflow: auto;
     position: relative;
+    // Increase max-height for better visibility
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: auto;
+    // Ensure content is fully visible and scrollable
+    min-height: 300px;
+    // Add proper z-index to prevent covering
+    z-index: 2;
+    // Add custom scrollbar styling
+    @include scrollbar-dark;
   }
 
   &__table {
@@ -65,9 +78,10 @@
   }
 
   &__thead {
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    // Remove sticky positioning to prevent coverage issues
+    position: relative;
+    // Lower z-index to prevent covering content
+    z-index: 1;
     background: rgba($color-bg-secondary, 0.95);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -98,6 +112,11 @@
   }
 
   &__tbody {
+    // Ensure tbody is fully visible and scrollable
+    overflow: visible;
+    position: relative;
+    // Remove any height constraints that might cut off content
+    max-height: none;
     .results-table__tr {
       transition: background-color 0.2s ease;
 
@@ -119,7 +138,9 @@
       border-bottom: 1px solid rgba($color-border, 0.1);
       color: $color-text-primary;
       vertical-align: top;
-
+      // Ensure cells don't get cut off
+      white-space: nowrap;
+      overflow: visible;
       &--null {
         color: $color-text-tertiary;
         font-style: italic;

@@ -15,7 +15,7 @@ function App() {
   return (
     <AuthProvider>
       <ProgressProvider>
-        <Router>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <div className="app">
             <Header />
             <main className="main">

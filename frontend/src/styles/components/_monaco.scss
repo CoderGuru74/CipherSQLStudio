@@ -124,3 +124,29 @@
     background-color: rgba($color-primary, 0.2) !important;
   }
 }
+
+// Fix Monaco Editor height issues
+.editor-panel {
+  &__editor {
+    .monaco-editor {
+      height: 400px !important;
+      min-height: 400px !important;
+      
+      .overflow-guard {
+        height: 400px !important;
+      }
+      
+      .monaco-editor {
+        height: 400px !important;
+        
+        .lines-content {
+          height: 400px !important;
+        }
+        
+        .view-lines {
+          height: 400px !important;
+        }
+      }
+    }
+  }
+}
