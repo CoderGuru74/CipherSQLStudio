@@ -17,12 +17,12 @@ interface Assignment {
 
 const AssignmentList: React.FC = () => {
   const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const [filter, setFilter] = useState<string>('all');
-  const [loading, setLoading] = useState<boolean>(true);
+  const [filter, setFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    // Mock data - in real app, this would come from API
+    // TODO: Replace with actual API call
     const mockAssignments: Assignment[] = [
       {
         id: '1',

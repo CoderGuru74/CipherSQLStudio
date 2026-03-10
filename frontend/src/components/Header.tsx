@@ -9,8 +9,8 @@ const Header: React.FC = () => {
   const { user, logout } = useAuth();
   const { getCompletionStats } = useProgress();
 
-  // Calculate progress stats
-  const progressStats = getCompletionStats(10); // Assuming 10 total assignments
+  // TODO: Make total assignments dynamic
+  const progressStats = getCompletionStats(10);
 
   const handleLogout = () => {
     logout();
