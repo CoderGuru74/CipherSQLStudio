@@ -21,13 +21,13 @@ interface Assignment {
 const Workspace: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [assignment, setAssignment] = useState<Assignment | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [query, setQuery] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState('');
   const [results, setResults] = useState<any>(null);
-  const [executing, setExecuting] = useState<boolean>(false);
+  const [executing, setExecuting] = useState(false);
 
   useEffect(() => {
-    // Mock data
+    // TODO: Replace with actual API call
     const mockAssignments: Record<string, Assignment> = {
       '1': {
         id: '1',
@@ -69,6 +69,7 @@ const Workspace: React.FC = () => {
   const handleRunQuery = async () => {
     if (!query.trim()) return;
     setExecuting(true);
+    
     setTimeout(() => {
       setResults({
         columns: ['id', 'first_name', 'last_name', 'email', 'department', 'salary'],

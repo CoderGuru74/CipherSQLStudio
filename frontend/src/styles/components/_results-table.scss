@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
-    // Ensure proper positioning and z-index
+    // temporary fix for z-index stacking
     position: relative;
     z-index: 1;
   }

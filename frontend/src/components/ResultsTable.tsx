@@ -1,11 +1,10 @@
-import React from 'react';
-
 interface ResultsTableProps {
   results: any;
   loading: boolean;
 }
 
-const ResultsTable: React.FC<ResultsTableProps> = ({ results, loading }) => {
+function ResultsTable({ results, loading }: ResultsTableProps) {
+  // TODO: Add better error handling for malformed results
   if (loading) {
     return (
       <div className="results-table__container">
@@ -31,6 +30,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, loading }) => {
     );
   }
 
+  // Handle error case
   if (results.error) {
     return (
       <div className="results-table__container">
