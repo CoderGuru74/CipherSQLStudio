@@ -72,10 +72,8 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
         const assignmentId = getAssignmentId();
         if (assignmentId) {
           markAssignmentCompleted(assignmentId);
-          showSuccess('Correct! Progress Saved');
-        } else {
-          showSuccess('Query executed successfully!');
         }
+        showSuccess('Query executed successfully!');
       }, 1000);
     }
   };
@@ -150,9 +148,7 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
         />
       </div>
 
-      {/* REMOVED: The "editor-panel__status" div has been deleted 
-        to prevent it from overlapping your typing area.
-      */}
+      {/* Status bar removed to prevent overlap with typing area */}
     </div>
   );
 };

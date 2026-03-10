@@ -7,13 +7,13 @@
   flex-direction: column;
   height: auto;
   min-height: calc(100vh - 80px);
-  margin: $spacing-lg;
+  margin: 24px; // Manual adjustment for better spacing
   border-radius: $radius-lg;
   overflow: visible; 
   position: relative;
 
   @include respond-to('mobile') {
-    margin: $spacing-sm;
+    margin: 12px;
     height: auto;
     min-height: calc(100vh - 70px);
   }
@@ -167,7 +167,7 @@
     position: relative;
     background: #1e1e1e !important;
 
-    // --- SUBMISSION FIX: HIDE THE OVERLAY TEXT ---
+    // Hide Monaco status overlays that interfere with typing
     .editor-widget,
     .status-bar,
     .editor-status-selection,
@@ -180,7 +180,7 @@
       z-index: -10 !important;
     }
 
-    // --- FORCE TYPING AREA TO FILL THE BOX ---
+    // Make editor fill the entire container
     .monaco-editor {
       position: absolute !important;
       top: 0 !important;
