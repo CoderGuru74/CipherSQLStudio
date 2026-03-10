@@ -7,9 +7,19 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "./src/styles/_variables.scss"; @import "./src/styles/_mixins.scss";`
+        // We use a template literal to ensure these are prepended correctly
+        additionalData: `
+          @use "sass:math";
+          @use "@/styles/_variables.scss" as *;
+          @use "@/styles/_mixins.scss" as *;
+        `
       }
     }
+  },
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
   },
   server: {
     port: 3000,

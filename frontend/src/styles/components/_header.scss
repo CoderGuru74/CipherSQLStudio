@@ -1,11 +1,12 @@
 // Header Component Styles
-@import '../variables';
-@import '../mixins';
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .header {
   @include glassmorphism(0.8, 16px, 0.1);
   position: sticky;
   top: 0;
-  z-index: $z-index-header;
+  z-index: $z-header;
   border-bottom: 1px solid rgba($color-border, 0.2);
 
   &__container {
@@ -140,7 +141,7 @@
   }
 
   &__user-button {
-    @include button-ghost;
+    @include button-base;
     padding: $spacing-sm;
     border-radius: 50%;
     width: 40px;

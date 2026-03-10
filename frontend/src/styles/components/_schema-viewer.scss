@@ -1,4 +1,7 @@
 // Schema Viewer Component Styles
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .schema-viewer {
   &__content {
     max-height: 350px;

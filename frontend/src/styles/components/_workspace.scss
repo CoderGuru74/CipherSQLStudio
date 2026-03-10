@@ -1,5 +1,5 @@
-@import '../variables';
-@import '../mixins';
+@use '../variables' as *;
+@use '../mixins' as *;
 
 .workspace {
   @include glassmorphism(0.8, 16px, 0.1);
@@ -9,7 +9,7 @@
   min-height: calc(100vh - 80px);
   margin: $spacing-lg;
   border-radius: $radius-lg;
-  overflow: visible; // Changed to visible to prevent clipping
+  overflow: visible; 
   position: relative;
 
   @include respond-to('mobile') {
@@ -53,7 +53,7 @@
     min-height: 0;
     height: auto;
     padding: 0 $spacing-lg $spacing-lg;
-    overflow: visible; // Ensures children aren't cut off
+    overflow: visible; 
 
     @include desktop {
       display: grid;
@@ -110,12 +110,11 @@
     overflow-y: auto;
     overflow-x: auto;
     min-height: 150px;
-    max-height: 500px; // Increased to show more results
+    max-height: 500px; 
     display: flex;
     flex-direction: column;
     position: relative;
     
-    // Custom scrollbar for better UX
     &::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -134,7 +133,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 400px;
+  min-height: 450px; 
+  overflow: hidden;
 
   &__controls {
     padding: $spacing-md;
@@ -142,21 +142,21 @@
     @include flex-between;
     align-items: center;
     flex-shrink: 0;
-  }
-
-  &__actions {
-    display: flex;
-    gap: $spacing-sm;
+    background: rgba(0, 0, 0, 0.1);
   }
 
   &__run-button {
     @include button-primary;
     padding: $spacing-sm $spacing-md;
     background: $color-primary;
-    
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+    font-weight: $font-weight-semibold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($color-primary, 0.3);
     }
   }
 
@@ -165,15 +165,44 @@
     min-height: 400px;
     height: 400px;
     position: relative;
-    
+    background: #1e1e1e !important;
+
+    // --- SUBMISSION FIX: HIDE THE OVERLAY TEXT ---
+    .editor-widget,
+    .status-bar,
+    .editor-status-selection,
+    [part="status-bar"],
+    div[class*="status-bar"] {
+      display: none !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      pointer-events: none !important;
+      z-index: -10 !important;
+    }
+
+    // --- FORCE TYPING AREA TO FILL THE BOX ---
     .monaco-editor {
-      height: 400px !important;
-      min-height: 400px !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+
+      .overflow-guard {
+        height: 100% !important;
+        width: 100% !important;
+        pointer-events: all !important; // Makes sure you can click
+        z-index: 10 !important;
+      }
+
+      // Ensure the text cursor and lines are visible
+      .view-lines {
+        z-index: 20 !important;
+        cursor: text !important;
+      }
     }
   }
 }
-
-
 
 // Question Panel
 .question-panel {
@@ -203,7 +232,7 @@
       gap: $spacing-md;
     }
     .editor-panel {
-      min-height: 300px;
+      min-height: 350px;
       &__editor {
         height: 300px;
         .monaco-editor { height: 300px !important; }

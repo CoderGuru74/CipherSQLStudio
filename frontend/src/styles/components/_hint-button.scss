@@ -1,6 +1,9 @@
 // Hint Button Component Styles
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .hint-button {
-  @include button-secondary;
+  @include button-base;
   width: 100%;
   justify-content: center;
   gap: $spacing-sm;
@@ -26,7 +29,7 @@
   }
 
   &:disabled {
-    @include button-ghost;
+    @include button-base;
     opacity: 0.5;
     cursor: not-allowed;
 

@@ -1,4 +1,7 @@
 // Loading Component Styles
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .loading {
   display: flex;
   flex-direction: column;

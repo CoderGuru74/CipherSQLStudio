@@ -1,4 +1,7 @@
 // Monaco Editor Custom Styles
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .monaco-editor {
   .margin {
     background-color: $color-bg-secondary !important;

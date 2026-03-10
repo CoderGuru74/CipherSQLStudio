@@ -1,22 +1,65 @@
-// Main SCSS file - Import all partials
-@import 'variables';
-@import 'mixins';
-@import 'base';
+// 1. Load Base and Reset first
+@use 'base';
 
-// Component-specific styles will be imported here
-@import 'components/header';
-@import 'components/assignment-list';
-@import 'components/workspace';
-@import 'components/schema-viewer';
-@import 'components/results-table';
-@import 'components/hint-button';
-@import 'components/loading';
-@import 'components/error';
-@import 'components/monaco';
-@import 'components/profile-dropdown';
-@import 'components/toast';
-@import 'components/glassmorphism';
-@import 'components/progress';
-@import 'components/progress-assignments';
-@import 'components/auth-modal';
-@import 'components/login-modal';
+// 2. Load Utility/Helper Components
+@use 'components/glassmorphism';
+@use 'components/monaco';
+@use 'components/loading';
+
+// 3. Load the Workspace (The SQL Editor and Panels)
+@use 'components/workspace';
+
+// 4. Load remaining UI Components
+@use 'components/header';
+@use 'components/assignment-list';
+@use 'components/schema-viewer';
+@use 'components/results-table';
+@use 'components/hint-button';
+@use 'components/error';
+@use 'components/profile-dropdown';
+@use 'components/toast';
+@use 'components/progress';
+@use 'components/progress-assignments';
+@use 'components/auth-modal';
+@use 'components/login-modal';
+
+// Global Root Variables (Using injected variables)
+:root {
+  background-color: $color-bg-primary;
+  color: $color-text-primary;
+}
+
+// --- FINAL SUBMISSION FIX: HIDE ALL MONACO STATUS OVERLAYS ---
+// This ensures that "Ready to run" text is deleted from the screen
+.editor-panel__editor {
+  .editor-widget.status-bar,
+  .status-bar,
+  .editor-status-selection,
+  [part="status-bar"],
+  div[class*="status-bar"],
+  .monaco-editor-overlay {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  // Force the typing area to take up the full 400px height
+  .monaco-editor {
+    height: 400px !important;
+    min-height: 400px !important;
+
+    .overflow-guard {
+      height: 400px !important;
+      pointer-events: all !important;
+    }
+    
+    // Ensure the text cursor layer is on top
+    .view-lines {
+      z-index: 50 !important;
+    }
+  }
+}

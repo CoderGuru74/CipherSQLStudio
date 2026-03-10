@@ -1,6 +1,7 @@
 // Profile Dropdown Component Styles
-@import '../variables';
-@import '../mixins';
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .profile-dropdown {
   position: relative;
   display: inline-block;
@@ -73,7 +74,7 @@
     border: 1px solid rgba($color-border, 0.2);
     border-radius: $radius-lg;
     box-shadow: $shadow-xl;
-    z-index: $z-index-dropdown;
+    z-index: $z-dropdown;
     animation: dropdownSlideIn 0.3s ease;
 
     @include respond-to('mobile') {

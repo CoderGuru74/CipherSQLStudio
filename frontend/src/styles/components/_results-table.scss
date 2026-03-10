@@ -1,6 +1,7 @@
 // Results Table Component Styles
-@import '../variables';
-@import '../mixins';
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .results-table {
   &__container {
     @include glassmorphism-card(0.7, 12px);
@@ -268,7 +269,7 @@
 
   &__action-button,
   &__export-button {
-    @include button-ghost;
+    @include button-base;
     padding: $spacing-sm $spacing-md;
     font-size: $font-size-sm;
     display: flex;
@@ -279,7 +280,7 @@
   }
 
   &__export-button {
-    @include button-secondary;
+    @include button-base;
     padding: $spacing-xs $spacing-sm;
     font-size: $font-size-xs;
     gap: $spacing-xs;
@@ -303,7 +304,7 @@
 }
 
 .results-table__page-button {
-  @include button-ghost;
+  @include button-base;
   padding: $spacing-xs $spacing-sm;
   font-size: $font-size-xs;
   min-width: 32px;

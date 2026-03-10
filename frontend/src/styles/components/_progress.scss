@@ -1,6 +1,7 @@
 // Progress Component Styles
-@import '../variables';
-@import '../mixins';
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .progress {
   @include glassmorphism(0.8, 16px, 0.1);
   padding: $spacing-xl;

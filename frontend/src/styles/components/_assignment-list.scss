@@ -1,6 +1,7 @@
 // Assignment List Component Styles
-@import '../variables';
-@import '../mixins';
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .assignment-list {
   @include glassmorphism(0.8, 16px, 0.1);
   padding: $spacing-lg;
@@ -46,7 +47,7 @@
   }
 
   &__filter {
-    @include button-ghost;
+    @include button-base;
     padding: $spacing-sm $spacing-md;
     font-size: $font-size-sm;
     border-radius: 9999px;

@@ -1,6 +1,6 @@
 // Glassmorphism Theme Mixins and Classes
-@import '../variables';
-@import '../mixins';
+@use 'sass:math';
+@use '../variables' as *;
 
 // Base glassmorphism mixin
 @mixin glassmorphism($opacity: 0.8, $blur: 16px, $border-opacity: 0.1) {

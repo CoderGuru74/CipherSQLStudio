@@ -1,31 +1,15 @@
-// Responsive Breakpoint Mixins
+// Mixins - Variables are globally provided by Vite
 @use 'sass:math';
+@use 'variables' as *;
 
-@mixin mobile {
-  @media (min-width: #{$breakpoint-sm}) {
-    @content;
-  }
-}
+// --- Responsive Breakpoints ---
+// Updated to use max-width where necessary for the col-loops to work
+@mixin mobile { @media (max-width: #{$breakpoint-md - 1px}) { @content; } }
+@mixin tablet { @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1px}) { @content; } }
+@mixin desktop { @media (min-width: #{$breakpoint-lg}) { @content; } }
+@mixin large-desktop { @media (min-width: #{$breakpoint-xl}) { @content; } }
 
-@mixin tablet {
-  @media (min-width: #{$breakpoint-md}) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media (min-width: #{$breakpoint-lg}) {
-    @content;
-  }
-}
-
-@mixin large-desktop {
-  @media (min-width: #{$breakpoint-xl}) {
-    @content;
-  }
-}
-
-// Grid System Mixins
+// --- Grid System Mixins ---
 @mixin container {
   width: 100%;
   max-width: 1200px;
@@ -33,304 +17,36 @@
   padding: 0 $spacing-md;
 }
 
-@mixin grid-columns($columns: 12) {
-  display: grid;
-  grid-template-columns: repeat($columns, 1fr);
-  gap: $spacing-md;
-}
-
 @mixin col($span: 1, $total: 12) {
-  grid-column: span math.div($span * 12, $total);
+  flex: 0 0 math.percentage(math.div($span, $total));
+  max-width: math.percentage(math.div($span, $total));
+  padding: 0 math.div($grid-gutter, 2);
 }
 
-// Flexbox Mixins
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+// FIXED: These were missing and causing your "Undefined Mixin" error
+@mixin col-sm($span: 1) { @include mobile { @include col($span); } }
+@mixin col-md($span: 1) { @include tablet { @include col($span); } }
+@mixin col-lg($span: 1) { @include desktop { @include col($span); } }
+@mixin col-xl($span: 1) { @include large-desktop { @include col($span); } }
 
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+// --- Flexbox Mixins ---
+@mixin flex-center { display: flex; align-items: center; justify-content: center; }
+@mixin flex-between { display: flex; align-items: center; justify-content: space-between; }
+@mixin flex-column { display: flex; flex-direction: column; }
+@mixin flex-start { display: flex; align-items: flex-start; justify-content: flex-start; }
+@mixin flex-end { display: flex; align-items: flex-end; justify-content: flex-end; }
 
-@mixin flex-start {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-@mixin flex-end {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-@mixin flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-// Typography Mixins
-@mixin text-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-@mixin text-clamp($lines: 2) {
-  display: -webkit-box;
-  -webkit-line-clamp: $lines;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-// Button Mixins
-@mixin button-base {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: $spacing-sm $spacing-md;
-  border: none;
-  border-radius: $radius-md;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all $transition-normal ease;
-  user-select: none;
-}
-
-@mixin button-primary {
-  @include button-base;
-  background: $color-primary;
-  color: $color-text-inverse;
-  box-shadow: 0 2px 4px rgba($color-primary, 0.2);
-
-  &:hover {
-    background: $color-primary-light;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba($color-primary, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
+// --- UI Element Mixins ---
+@mixin scrollbar-dark {
+  &::-webkit-scrollbar { width: 8px; height: 8px; }
+  &::-webkit-scrollbar-track { background: $color-bg-tertiary; border-radius: $radius-sm; }
+  &::-webkit-scrollbar-thumb { 
+    background: $color-bg-quaternary; 
+    border-radius: $radius-sm;
+    &:hover { background: $color-text-tertiary; }
   }
 }
 
-@mixin button-secondary {
-  @include button-base;
-  background: rgba($color-primary, 0.1);
-  color: $color-primary;
-  border: 1px solid rgba($color-primary, 0.2);
-
-  &:hover {
-    background: rgba($color-primary, 0.2);
-    border-color: rgba($color-primary, 0.3);
-  }
-}
-
-@mixin button-ghost {
-  @include button-base;
-  background: transparent;
-  color: $color-text-secondary;
-
-  &:hover {
-    background: rgba($color-primary, 0.1);
-    color: $color-primary;
-  }
-}
-
-// Card Mixins
-@mixin card {
-  background: $color-bg-secondary;
-  border: 1px solid $color-border;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-md;
-  overflow: hidden;
-}
-
-// Input Mixins
-@mixin input-base {
-  width: 100%;
-  padding: $spacing-sm $spacing-md;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background: $color-bg-secondary;
-  color: $color-text-primary;
-  font-size: $font-size-sm;
-  transition: all $transition-normal ease;
-
-  &:focus {
-    outline: none;
-    border-color: $color-primary;
-    box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
-  }
-
-  &::placeholder {
-    color: $color-text-tertiary;
-  }
-}
-
-// Scrollbar Mixins
-@mixin custom-scrollbar {
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba($color-border, 0.1);
-    border-radius: $border-radius-sm;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba($color-text-tertiary, 0.3);
-    border-radius: $border-radius-sm;
-
-    &:hover {
-      background: rgba($color-text-tertiary, 0.5);
-    }
-  }
-}
-
-// Animation Mixins
-@mixin fade-in($duration: 0.3s) {
-  animation: fadeIn $duration ease-in-out;
-}
-
-@mixin slide-up($duration: 0.3s) {
-  animation: slideUp $duration ease-out;
-}
-
-// Responsive Mixin
-@mixin respond-to($breakpoint) {
-  @if $breakpoint == mobile {
-    @media (max-width: #{$breakpoint-md - 1px}) {
-      @content;
-    }
-  } @else if $breakpoint == tablet {
-    @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1px}) {
-      @content;
-    }
-  } @else if $breakpoint == desktop {
-    @media (min-width: #{$breakpoint-lg}) {
-      @content;
-    }
-  }
-}
-
-// Glassmorphism Mixin
-@mixin glassmorphism($opacity: 0.8, $blur: 16px, $border-opacity: 0.1) {
-  background: rgba($color-bg-secondary, $opacity);
-  backdrop-filter: blur($blur);
-  -webkit-backdrop-filter: blur($blur);
-  border: 1px solid rgba(255, 255, 255, $border-opacity);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-// Glassmorphism variants
-@mixin glassmorphism-light($opacity: 0.6, $blur: 12px) {
-  @include glassmorphism($opacity, $blur, 0.05);
-}
-
-@mixin glassmorphism-dark($opacity: 0.9, $blur: 20px) {
-  @include glassmorphism($opacity, $blur, 0.15);
-}
-
-@mixin glassmorphism-card($opacity: 0.7, $blur: 16px, $border-opacity: 0.1) {
-  @include glassmorphism($opacity, $blur, $border-opacity);
-  border-radius: $radius-lg;
-}
-
-// Responsive Column Mixins
-@mixin col-sm($columns: 12, $gutter: $grid-gutter) {
-  @include mobile {
-    flex: 0 0 math.percentage(math.div($columns, $grid-columns));
-    max-width: math.percentage(math.div($columns, $grid-columns));
-    padding: 0 math.div($gutter, 2);
-  }
-}
-
-@mixin col-md($columns: 12, $gutter: $grid-gutter) {
-  @include tablet {
-    flex: 0 0 math.percentage(math.div($columns, $grid-columns));
-    max-width: math.percentage(math.div($columns, $grid-columns));
-    padding: 0 math.div($gutter, 2);
-  }
-}
-
-@mixin col-lg($columns: 12, $gutter: $grid-gutter) {
-  @include desktop {
-    flex: 0 0 math.percentage(math.div($columns, $grid-columns));
-    max-width: math.percentage(math.div($columns, $grid-columns));
-    padding: 0 math.div($gutter, 2);
-  }
-}
-
-@mixin col-xl($columns: 12, $gutter: $grid-gutter) {
-  @include large-desktop {
-    flex: 0 0 math.percentage(math.div($columns, $grid-columns));
-    max-width: math.percentage(math.div($columns, $grid-columns));
-    padding: 0 math.div($gutter, 2);
-  }
-}
-
-// Flexbox Mixins
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-@mixin flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-@mixin flex-start {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-@mixin flex-end {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-}
-
-// Typography Mixins
-@mixin text-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-@mixin text-clamp($lines: 2) {
-  display: -webkit-box;
-  -webkit-line-clamp: $lines;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-// Button Mixins
 @mixin button-base {
   display: inline-flex;
   align-items: center;
@@ -342,71 +58,19 @@
   font-weight: $font-weight-medium;
   font-size: $font-size-sm;
   line-height: $line-height-tight;
-  text-decoration: none;
   cursor: pointer;
   transition: all $transition-fast;
   user-select: none;
-  
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 @mixin button-primary {
   @include button-base;
   background-color: $color-primary;
   color: $color-bg-primary;
-  
-  &:hover:not(:disabled) {
-    background-color: $color-primary-dark;
-  }
-  
-  &:active:not(:disabled) {
-    background-color: $color-primary-light;
-  }
+  &:hover:not(:disabled) { background-color: $color-primary-dark; }
 }
 
-@mixin button-secondary {
-  @include button-base;
-  background-color: $color-bg-tertiary;
-  color: $color-text-primary;
-  border: 1px solid $color-border;
-  
-  &:hover:not(:disabled) {
-    background-color: $color-bg-quaternary;
-    border-color: $color-border-light;
-  }
-}
-
-@mixin button-ghost {
-  @include button-base;
-  background-color: transparent;
-  color: $color-text-secondary;
-  
-  &:hover:not(:disabled) {
-    background-color: $color-bg-tertiary;
-    color: $color-text-primary;
-  }
-}
-
-// Card Mixins
-@mixin card {
-  background-color: $color-bg-secondary;
-  border: 1px solid $color-border;
-  border-radius: $radius-lg;
-  box-shadow: $shadow-md;
-  transition: all $transition-normal;
-}
-
-@mixin card-hover {
-  &:hover {
-    box-shadow: $shadow-lg;
-    transform: translateY(-2px);
-  }
-}
-
-// Input Mixins
 @mixin input-base {
   width: 100%;
   padding: $spacing-sm $spacing-md;
@@ -414,75 +78,34 @@
   border-radius: $radius-md;
   background-color: $color-bg-tertiary;
   color: $color-text-primary;
-  font-family: $font-family-sans;
-  font-size: $font-size-sm;
-  line-height: $line-height-normal;
-  transition: all $transition-fast;
-  
-  &::placeholder {
-    color: $color-text-tertiary;
-  }
-  
-  &:focus {
-    outline: none;
-    border-color: $color-primary;
-    box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
-  }
-  
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  &:focus { outline: none; border-color: $color-primary; box-shadow: 0 0 0 3px rgba($color-primary, 0.1); }
 }
 
-// Scrollbar Mixins
-@mixin scrollbar-dark {
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: $color-bg-tertiary;
-    border-radius: $radius-sm;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: $color-bg-quaternary;
-    border-radius: $radius-sm;
-    
-    &:hover {
-      background: $color-text-tertiary;
-    }
-  }
+// --- Layout & Effects ---
+@mixin glassmorphism($opacity: 0.8, $blur: 16px, $border-opacity: 0.1) {
+  background: rgba($color-bg-secondary, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, $border-opacity);
 }
 
-// Animation Mixins
-@mixin fade-in($duration: $transition-normal) {
-  animation: fadeIn $duration ease-in-out;
+@mixin glassmorphism-card($opacity: 0.7, $blur: 16px, $border-opacity: 0.1) {
+  @include glassmorphism($opacity, $blur, $border-opacity);
+  border-radius: $radius-lg;
 }
 
-@mixin slide-up($duration: $transition-normal) {
-  animation: slideUp $duration ease-in-out;
+// --- Animations ---
+@mixin fade-in($duration: $transition-normal) { animation: fadeIn $duration ease-in-out; }
+@mixin slide-up($duration: $transition-normal) { animation: slideUp $duration ease-in-out; }
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile { @include mobile { @content; } }
+  @else if $breakpoint == tablet { @include tablet { @content; } }
+  @else if $breakpoint == desktop { @include desktop { @content; } }
 }
 
-// Keyframes
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { 
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

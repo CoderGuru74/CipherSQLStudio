@@ -26,7 +26,6 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
   const { markAssignmentCompleted } = useProgress();
   const location = useLocation();
 
-  // Get assignment ID from URL
   const getAssignmentId = () => {
     const match = location.pathname.match(/\/assignment\/(.+)/);
     return match ? match[1] : null;
@@ -55,36 +54,10 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
       }
     });
 
-    // Set editor options
-    editor.updateOptions({
-      minimap: { enabled: false },
-      scrollBeyondLastLine: false,
-      fontSize: 14,
-      fontFamily: 'Fira Code, Monaco, Consolas, monospace',
-      lineNumbers: 'on',
-      renderLineHighlight: 'line',
-      selectOnLineNumbers: true,
-      automaticLayout: true,
-      wordWrap: 'on',
-      bracketPairColorization: { enabled: true },
-      guides: {
-        bracketPairs: true,
-        indentation: true
-      }
-    });
-
-    // Add keyboard shortcuts
-    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
-      onRun();
-    });
-
-    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK, () => {
-      onClear();
-    });
-
-    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyR, () => {
-      onReset();
-    });
+    // Keyboard shortcuts
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => onRun());
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK, () => onClear());
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyR, () => onReset());
   };
 
   const handleRunQuery = () => {
@@ -95,8 +68,6 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
     
     if (!executing) {
       onRun();
-      
-      // Simulate success for demo (in real app, this would come from API response)
       setTimeout(() => {
         const assignmentId = getAssignmentId();
         if (assignmentId) {
@@ -151,14 +122,15 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
         </div>
       </div>
 
-      <div className="editor-panel__editor-container">
+      <div className="editor-panel__editor">
         <Editor
-          height="100%"
+          height="400px"
           defaultLanguage="sql"
           value={value}
           onChange={(newValue) => onChange(newValue || '')}
           onMount={handleEditorDidMount}
           theme="vs-dark"
+          loading="" // Hides the "Loading" overlay text
           options={{
             minimap: { enabled: false },
             scrollBeyondLastLine: false,
@@ -166,42 +138,21 @@ const SQLEditor: React.FC<SQLEditorProps> = ({
             fontFamily: 'Fira Code, Monaco, Consolas, monospace',
             lineNumbers: 'on',
             renderLineHighlight: 'line',
-            selectOnLineNumbers: true,
             automaticLayout: true,
             wordWrap: 'on',
-            bracketPairColorization: { enabled: true },
-            guides: {
-              bracketPairs: true,
-              indentation: true
+            scrollbar: {
+              vertical: 'visible',
+              horizontal: 'visible'
             },
-            suggest: {
-              showKeywords: true,
-              showSnippets: true
-            },
-            quickSuggestions: {
-              other: true,
-              comments: true,
-              strings: true
-            }
+            // Removes any status widgets inside the editor
+            fixedOverflowWidgets: true,
           }}
         />
       </div>
 
-      <div className="editor-panel__status">
-        <div className={`editor-panel__status-indicator ${
-          executing ? 'editor-panel__status-indicator--loading' : 
-          value.trim() ? 'editor-panel__status-indicator--success' : ''
-        }`}></div>
-        <span>
-          {executing ? 'Executing query...' : 
-           value.trim() ? 'Ready to run' : 
-           'Enter SQL query...'}
-        </span>
-        <span style={{ marginLeft: 'auto' }}>
-          Lines: {value.split('\n').length} | 
-          Characters: {value.length}
-        </span>
-      </div>
+      {/* REMOVED: The "editor-panel__status" div has been deleted 
+        to prevent it from overlapping your typing area.
+      */}
     </div>
   );
 };

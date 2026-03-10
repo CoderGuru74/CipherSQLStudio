@@ -1,4 +1,8 @@
 // Error Component Styles
+@use 'sass:color'; // Required for modern color adjustments
+@use '../variables' as *;
+@use '../mixins' as *;
+
 .error {
   padding: $spacing-lg;
   background-color: rgba($color-error, 0.1);
@@ -85,7 +89,7 @@
   }
 
   &__button {
-    @include button-secondary;
+    @include button-base;
     padding: $spacing-xs $spacing-md;
     font-size: $font-size-xs;
     border-color: rgba($color-error, 0.3);
@@ -102,7 +106,8 @@
     background-color: $color-error;
 
     &:hover {
-      background-color: darken($color-error, 10%);
+      // FIXED: Switched from darken() to color.adjust() to fix deprecation warning
+      background-color: color.adjust($color-error, $lightness: -10%);
     }
   }
 
