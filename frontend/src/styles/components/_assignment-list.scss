@@ -4,14 +4,14 @@
 
 .assignment-list {
   @include glassmorphism(0.8, 16px, 0.1);
-  padding: $spacing-lg;
-  margin: $spacing-lg;
+  padding: 24px; // Manual spacing adjustment
+  margin: 24px;
   border-radius: $radius-lg;
   min-height: calc(100vh - 80px);
 
   @include respond-to('mobile') {
-    margin: $spacing-sm;
-    padding: $spacing-md;
+    margin: 12px;
+    padding: 16px;
     min-height: calc(100vh - 70px);
   }
 

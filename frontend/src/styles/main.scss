@@ -29,8 +29,8 @@
   color: $color-text-primary;
 }
 
-// --- FINAL SUBMISSION FIX: HIDE ALL MONACO STATUS OVERLAYS ---
-// This ensures that "Ready to run" text is deleted from the screen
+// --- Monaco Editor Status Fixes ---
+// Hide status overlays that interfere with typing
 .editor-panel__editor {
   .editor-widget.status-bar,
   .status-bar,
