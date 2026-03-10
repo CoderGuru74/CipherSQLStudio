@@ -78,10 +78,11 @@
   }
 
   &__thead {
-    // Remove sticky positioning to prevent coverage issues
-    position: relative;
-    // Lower z-index to prevent covering content
-    z-index: 1;
+    // Apply sticky positioning for better UX
+    position: sticky;
+    top: 0;
+    // Ensure proper z-index for layering
+    z-index: 5;
     background: rgba($color-bg-secondary, 0.95);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);

@@ -1,29 +1,26 @@
-// Workspace Component Styles
 @import '../variables';
 @import '../mixins';
+
 .workspace {
   @include glassmorphism(0.8, 16px, 0.1);
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px); // Account for header height
+  height: auto;
+  min-height: calc(100vh - 80px);
   margin: $spacing-lg;
   border-radius: $radius-lg;
-  // Enable scrolling for the entire workspace
-  overflow: auto;
-  // Ensure content stays within bounds
+  overflow: visible; // Changed to visible to prevent clipping
   position: relative;
-  min-height: calc(100vh - 80px);
 
   @include respond-to('mobile') {
     margin: $spacing-sm;
-    height: calc(100vh - 70px);
+    height: auto;
     min-height: calc(100vh - 70px);
   }
 
   &__container {
     display: flex;
     flex: 1;
-    // Remove overflow constraints to allow natural flow
     overflow: visible;
     min-height: 0;
     position: relative;
@@ -33,77 +30,9 @@
     }
   }
 
-  &__panel {
-    padding: $spacing-lg;
-    overflow-y: auto;
-
-    @include respond-to('mobile') {
-      padding: $spacing-md;
-      width: 100% !important;
-      flex: none !important;
-    }
-  }
-
-  &__panel--left {
-    flex: 1;
-    border-right: 1px solid rgba($color-border, 0.2);
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-lg;
-
-    @include respond-to('mobile') {
-      border-right: none;
-      border-bottom: 1px solid rgba($color-border, 0.2);
-      max-height: 40vh;
-    }
-  }
-
-  &__panel--right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-lg;
-
-    @include respond-to('mobile') {
-      max-height: 60vh;
-    }
-  }
-
-  &__section {
-    @include glassmorphism-card(0.7, 12px);
-    padding: $spacing-lg;
-    border-radius: $radius-md;
-    // Allow sections to scroll independently
-    overflow: hidden;
-    min-height: 200px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    @include respond-to('mobile') {
-      padding: $spacing-md;
-    }
-  }
-
-  &__section-title {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
-    color: $color-text-primary;
-    margin-bottom: $spacing-md;
-    display: flex;
-    align-items: center;
-    gap: $spacing-sm;
-  }
-
-  &__section-icon {
-    width: 24px;
-    height: 24px;
-    color: $color-primary;
-  }
-
   &__header {
     margin-bottom: $spacing-lg;
+    padding: $spacing-lg $spacing-lg 0;
     @include flex-between;
     align-items: center;
     flex-wrap: wrap;
@@ -117,39 +46,19 @@
     margin-bottom: 0;
   }
 
-  &__actions {
-    display: flex;
-    gap: $spacing-sm;
-    align-items: center;
-  }
-
-  &__back-button {
-    @include button-ghost;
-    padding: $spacing-sm $spacing-md;
-    color: $color-text-secondary;
-
-    &:hover {
-      color: $color-text-primary;
-    }
-  }
-
   &__content {
-    display: grid;
-    gap: $spacing-lg;
-    grid-template-columns: 1fr;
-    // Use flex for better height control
     display: flex;
     flex-direction: column;
+    gap: $spacing-lg;
     min-height: 0;
-    // Remove fixed height constraints
     height: auto;
-    max-height: calc(100vh - 200px);
-    overflow: hidden; // Control overflow at this level
+    padding: 0 $spacing-lg $spacing-lg;
+    overflow: visible; // Ensures children aren't cut off
 
     @include desktop {
-      // Use grid for desktop layout
       display: grid;
       grid-template-columns: 1fr 1fr;
+      align-items: start;
     }
   }
 
@@ -158,30 +67,63 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-lg;
-    // Control overflow at panel level
-    overflow: hidden;
     min-height: 0;
-    height: 100%;
+    height: auto;
     position: relative;
+  }
+
+  &__section {
+    @include glassmorphism-card(0.7, 12px);
+    padding: $spacing-lg;
+    border-radius: $radius-md;
+    overflow: hidden;
+    min-height: 200px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    @include respond-to('mobile') {
+      padding: $spacing-md;
+    }
   }
 
   &__section-header {
     @include flex-between;
     margin-bottom: $spacing-md;
     padding-bottom: $spacing-md;
-    border-bottom: 1px solid $color-border;
+    border-bottom: 1px solid rgba($color-border, 0.2);
+  }
+
+  &__section-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
   }
 
   &__section-content {
     flex: 1;
-    // Enable scrolling for content areas
     overflow-y: auto;
     overflow-x: auto;
     min-height: 150px;
-    max-height: 400px;
+    max-height: 500px; // Increased to show more results
     display: flex;
     flex-direction: column;
     position: relative;
+    
+    // Custom scrollbar for better UX
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba($color-primary, 0.2);
+      border-radius: 10px;
+    }
   }
 }
 
@@ -189,7 +131,6 @@
 .editor-panel {
   @include glassmorphism-card(0.7, 12px);
   border-radius: $radius-lg;
-  // Remove overflow: hidden to allow Monaco Editor to expand
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -211,39 +152,11 @@
   &__run-button {
     @include button-primary;
     padding: $spacing-sm $spacing-md;
-    display: flex;
-    align-items: center;
-    gap: $spacing-xs;
-    font-weight: $font-weight-medium;
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 10;
-    position: sticky;
-    bottom: 0;
     background: $color-primary;
-
+    
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;
-      transform: none;
-    }
-
-    &:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba($color-primary, 0.3);
-    }
-  }
-
-  &__status-indicator {
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top: 2px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-
-    &--loading {
-      display: block;
     }
   }
 
@@ -260,163 +173,41 @@
   }
 }
 
+
+
 // Question Panel
 .question-panel {
   &__content {
     color: $color-text-secondary;
     line-height: $line-height-relaxed;
   }
-
-  &__description {
-    margin-bottom: $spacing-lg;
-  }
-
-  &__requirements {
-    margin-bottom: $spacing-lg;
-  }
-
-  &__requirements-title {
-    font-size: $font-size-base;
-    font-weight: $font-weight-semibold;
-    color: $color-text-primary;
-    margin-bottom: $spacing-sm;
-  }
-
-  &__requirements-list {
-    list-style: none;
-    padding: 0;
-  }
-
+  
   &__requirement {
     padding: $spacing-sm 0;
     padding-left: $spacing-lg;
     position: relative;
-    color: $color-text-secondary;
 
     &::before {
       content: '✓';
       position: absolute;
       left: 0;
       color: $color-primary;
-      font-weight: $font-weight-bold;
     }
-  }
-
-  &__hints {
-    margin-top: $spacing-lg;
-    padding-top: $spacing-lg;
-    border-top: 1px solid $color-border;
-  }
-
-  &__hint-button {
-    @include button-secondary;
-    width: 100%;
-    justify-content: center;
-    gap: $spacing-sm;
-
-    &:disabled {
-      @include button-ghost;
-      opacity: 0.5;
-    }
-  }
-
-  &__hint-content {
-    margin-top: $spacing-md;
-    padding: $spacing-md;
-    background-color: $color-bg-tertiary;
-    border-radius: $radius-md;
-    border-left: 4px solid $color-primary;
-    color: $color-text-secondary;
-    font-size: $font-size-sm;
-    line-height: $line-height-normal;
-    @include fade-in;
-  }
-
-  &__hint-text {
-    margin-bottom: 0;
-  }
-
-  &__hint-attribution {
-    margin-top: $spacing-sm;
-    font-size: $font-size-xs;
-    color: $color-text-tertiary;
-    font-style: italic;
   }
 }
 
-// Mobile Responsive
+// Mobile Responsive Overrides
 @include mobile {
   .workspace {
-    &__container {
-      padding: $spacing-md $spacing-sm;
-      flex-direction: column;
-    }
-
-    &__header {
-      gap: $spacing-sm;
-    }
-
-    &__title {
-      font-size: $font-size-xl;
-    }
-
     &__content {
       gap: $spacing-md;
-      min-height: 500px;
     }
-
-    &__section {
-      padding: $spacing-md;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    &__section-header {
-      margin-bottom: $spacing-sm;
-      padding-bottom: $spacing-sm;
-    }
-
-    &__section-title {
-      font-size: $font-size-base;
-    }
-  }
-
-  .question-panel {
-    &__description {
-      font-size: $font-size-sm;
-    }
-
-    &__requirements-title {
-      font-size: $font-size-sm;
-    }
-
-    &__requirement {
-      font-size: $font-size-xs;
-      padding: $spacing-xs 0;
-      padding-left: $spacing-md;
-    }
-  }
-
-  .editor-panel {
-    &__editor-container {
-      min-height: 250px;
-      height: 250px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    &__editor {
-      min-height: 250px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    
-    &__run-button {
-      position: sticky;
-      bottom: 0;
-      z-index: 100;
-      width: 100%;
-      box-sizing: border-box;
+    .editor-panel {
+      min-height: 300px;
+      &__editor {
+        height: 300px;
+        .monaco-editor { height: 300px !important; }
+      }
     }
   }
 }
